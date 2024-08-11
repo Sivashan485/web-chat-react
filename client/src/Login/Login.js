@@ -12,6 +12,10 @@ function Login() {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/home');
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,7 +26,7 @@ function Login() {
           });
           setMessage(response.data.message);
           if(response.data.message === true){
-            alert('Login successful');
+            localStorage.setItem('token', response.data.token);
             navigate('/home');
           }
           else{
